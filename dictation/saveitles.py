@@ -5,7 +5,7 @@ import django
 os.environ['DJANGO_SETTINGS_MODULE'] = 'dictation.settings'
 django.setup()
 from main.models import Word
-itles = "/Users/seahurt/Documents/result.tsv"
+itles = "itles.tsv"
 
 with open(itles) as f:
     content = f.readlines()

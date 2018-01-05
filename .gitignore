@@ -105,3 +105,6 @@ ENV/
 
 # sqllite
 db.sqlite3
+
+# pycharm
+.idea/
