@@ -19,5 +19,6 @@ from main import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^word$', views.index,name='index'),
-    url(r'^random',views.randword,name='randword')
+    url(r'^random',views.randword,name='randword'),
+    url(r'^$',views.randword,name='randword'),
 ]

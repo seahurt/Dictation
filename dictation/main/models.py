@@ -1,12 +1,11 @@
 from django.db import models
-from aip import AipSpeech
 from dictation import settings
 import os
 from gtts import gTTS
 # Create your models here.
-BASE_DIR = settings.BASE_DIR
+STATIC_DIR = settings.STATIC_ROOT
 # ABS_AUDIO_DIR = os.path.join(BASE_DIR,settings.STATIC_URL)
-ABS_AUDIO_DIR = os.path.join(BASE_DIR,'static/main/audio/')
+ABS_AUDIO_DIR = os.path.join(STATIC_DIR,'main/audio/')
 # HOST_AUDIO_DIR = os.path.join(settings.STATIC_URL,'audio')
 
 class Word (models.Model):
