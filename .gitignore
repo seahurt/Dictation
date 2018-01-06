@@ -110,3 +110,5 @@ db.sqlite3
 .idea/
 # audio
 *.mp3
+# static
+dictation/static/
