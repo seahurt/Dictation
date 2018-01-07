@@ -2,6 +2,8 @@ from django.db import models
 from dictation import settings
 import os
 from gtts import gTTS
+from threading import Thread
+
 # Create your models here.
 STATIC_DIR = settings.AUDIO_DIRS
 # ABS_AUDIO_DIR = os.path.join(BASE_DIR,settings.STATIC_URL)
@@ -36,9 +38,14 @@ class Word (models.Model):
         # else:
         #     print(result)
         #gtts
-        tts = gTTS(text=self.english, lang='en')
+        tts = gTTS(text=self.english, lang='en', slow=False)
         pronunciation = os.path.join(ABS_AUDIO_DIR, self.english + '.mp3')
-        tts.save(pronunciation)
+        t = Thread(target=tts.save,args=(pronunciation,))
+        t.daemon = True
+        t.start()
+        t.join(timeout=3)
+        if t.is_alive():
+            return
         self.pronunciation = self.english+'.mp3'
-        super(Word,self).save()
+        self.save()
 

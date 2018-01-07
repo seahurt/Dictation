@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Word
 from django.http import HttpResponse
 from random import randint
-from multiprocessing import Pool
+from multiprocessing import Pool,Process
 # Create your views here.
 def index(request):
     if request.method=='GET':
@@ -25,10 +25,10 @@ def randword(request):
     wordlist = Word.objects.all()
     key = randint(0,len(wordlist)-1)
     word = wordlist[key]
-    p = Pool()
+    # p = Pool()
     if word.pronunciation == '':
-        p.apply_async(word.Pronunce)
-    p.close()
-    p.join()
+        p = Process(target=word.Pronunce)
+        p.start()
+        p.join()
     context = {'word':word}
     return render(request,'main/random.html',context)

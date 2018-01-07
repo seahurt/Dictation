@@ -18,6 +18,7 @@ methods:{
     clear:function(){
         this.answer='';
         this.message='';
-    }
+    },
+    
 }
 })
