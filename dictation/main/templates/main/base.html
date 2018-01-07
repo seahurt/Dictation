@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}" />
+<script type="text/javascript" src="{% static 'main/js/vue.js' %}"></script>
+<title>{% block title %}My Dictation site{% endblock %}</title>
+</head>
+<body>
+<div id="sidebar">
+{% block sidebar %} {% endblock %} 
+</div>
+
+<div id="content">
+{% block content %}{% endblock %}
+</div>
+
+<div id="footer">
+{% block footer %}{% endblock %}
+</div>
+</body>
+</html>

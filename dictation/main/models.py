@@ -3,7 +3,7 @@ from dictation import settings
 import os
 from gtts import gTTS
 # Create your models here.
-STATIC_DIR = settings.STATIC_ROOT
+STATIC_DIR = settings.AUDIO_DIRS
 # ABS_AUDIO_DIR = os.path.join(BASE_DIR,settings.STATIC_URL)
 ABS_AUDIO_DIR = os.path.join(STATIC_DIR,'main/audio/')
 # HOST_AUDIO_DIR = os.path.join(settings.STATIC_URL,'audio')
