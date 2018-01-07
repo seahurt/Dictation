@@ -120,7 +120,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/dict.seahurt.xyz/static/'
-AUDIO_DIRS = os.path.join(BASE_DIR,'static/')
+if os.path.exists(STATIC_ROOT):
+    AUDIO_DIRS=STATIC_ROOT
+else:
+    AUDIO_DIRS = os.path.join(BASE_DIR,'static/')
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR,'static/'),
     AUDIO_DIRS,
