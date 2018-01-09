@@ -43,15 +43,15 @@ class Word (models.Model):
         # else:
         #     print(result)
         #gtts
-        tts = gTTS(text=self.english, lang='en', slow=False)
-        pronunciation = os.path.join(ABS_AUDIO_DIR, self.english + '.mp3')
+        tts = gTTS(text=self.spell, lang='en', slow=False)
+        pronunciation = os.path.join(ABS_AUDIO_DIR, self.spell + '.mp3')
         t = Thread(target=tts.save,args=(pronunciation,))
         t.daemon = True
         t.start()
         t.join(timeout=3)
         if t.is_alive():
             return
-        self.pronunciation = self.english+'.mp3'
+        self.pronunciation = self.spell+'.mp3'
         self.save()
 
 #

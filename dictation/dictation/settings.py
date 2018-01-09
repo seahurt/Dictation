@@ -124,7 +124,7 @@ if os.path.exists(STATIC_ROOT):
     AUDIO_DIRS=STATIC_ROOT
 else:
     AUDIO_DIRS = os.path.join(BASE_DIR,'static/')
-STATICFILES_DIRS = [
+    STATICFILES_DIRS = [
     # os.path.join(BASE_DIR,'static/'),
     AUDIO_DIRS,
 ]
