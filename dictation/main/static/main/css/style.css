@@ -9,6 +9,7 @@
     margin-top: 50px;
     width: 400px;
     border: 3px dotted green;
+
 }
 div#statinfo H4{
     text-align: center;
@@ -124,6 +125,7 @@ audio {
     margin-top: 25px;
     border: 2px solid green;
     height:50px;
+    /*visibility: hidden;*/
 }
 
 .msg{

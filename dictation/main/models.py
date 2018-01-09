@@ -12,7 +12,7 @@ ABS_AUDIO_DIR = os.path.join(STATIC_DIR,'main/audio/')
 # HOST_AUDIO_DIR = os.path.join(settings.STATIC_URL,'audio')
 
 class Word (models.Model):
-    spell = models.CharField(max_length=30,unique=True)
+    spell = models.CharField(max_length=30,unique=True,blank=False)
     definition = models.CharField(max_length=30)
     example = models.CharField(max_length=500,blank=True)
     pronunciation = models.CharField(max_length=1000,blank=True)
