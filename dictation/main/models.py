@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from dictation import settings
 import os
 from gtts import gTTS
@@ -11,13 +12,17 @@ ABS_AUDIO_DIR = os.path.join(STATIC_DIR,'main/audio/')
 # HOST_AUDIO_DIR = os.path.join(settings.STATIC_URL,'audio')
 
 class Word (models.Model):
-    english = models.CharField(max_length=30)
-    chinese = models.CharField(max_length=30)
+    spell = models.CharField(max_length=30,unique=True)
+    definition = models.CharField(max_length=30)
     example = models.CharField(max_length=500,blank=True)
     pronunciation = models.CharField(max_length=1000,blank=True)
+    phonetic_symbol = models.CharField(max_length=100,blank=True)
+    level = models.CharField(max_length=20,default='IELTS')
+    error = models.BooleanField(default=False)
+    known = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.english
+        return self.spell
 
     def Pronunce(self):
         # # Baidu AIP init
@@ -49,3 +54,42 @@ class Word (models.Model):
         self.pronunciation = self.english+'.mp3'
         self.save()
 
+#
+# class Level(models.Model):
+#     name = models.CharField(max_length=20)
+#     words = models.ManyToManyField(Word)
+#
+#     return self.name
+#     def __str__(self):
+#         pass
+
+
+# class DictUser(User):
+#     errorlist = models.ManyToManyField(Word,related_name="error_by_user")
+#     seenlist = models.ManyToManyField(Word,related_name="seen_by_user")
+#     knownlist = models.ManyToManyField(Word,related_name="known_by_user")
+
+#
+# class WordRecord(models.Model):
+#     user = models.ForeignKey(User)
+#     words = models.ForeignKey(Word)
+#     add_time = models.DateTimeField(auto_now=True)
+#
+#     class Meta:
+#         abstract = True
+#         ordering = ['-add_time']
+#
+# class ErrorRecord(WordRecord):
+#     class Meta:
+#         db_table = "error_record_list"
+#
+#
+# class SeenRecord(WordRecord):
+#     class Meta:
+#         db_table = "seen_record_list"
+#
+#
+# class KnownRecord(WordRecord):
+#     class Meta:
+#         db_table = "known_record_list"
+#

@@ -16,6 +16,6 @@ with open(itles) as f:
         try:
             exist = Word.objects.get(english=word)
         except BaseException:
-            newword = Word(english=word,chinese=explain)
+            newword = Word(spell=word,definition=explain)
             newword.save()
             print('%s saved' %word)
