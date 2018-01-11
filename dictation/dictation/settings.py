@@ -119,13 +119,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/var/www/dict.seahurt.xyz/static/'
-if os.path.exists(STATIC_ROOT):
-    AUDIO_DIRS=STATIC_ROOT
-else:
-    AUDIO_DIRS = os.path.join(BASE_DIR,'static/')
-    STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR,'static/'),
-    AUDIO_DIRS,
-]
-# STATIC_ROOT = os.path.join(BASE_DIR,'static/')
+STATIC_ROOT = 'static/'
+AUDIO_DIRS = os.path.join(BASE_DIR,'static/')

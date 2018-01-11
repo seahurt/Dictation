@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.encoding import python_2_unicode_compatible
 from dictation import settings
 import os
 from gtts import gTTS
@@ -11,6 +12,8 @@ STATIC_DIR = settings.AUDIO_DIRS
 ABS_AUDIO_DIR = os.path.join(STATIC_DIR,'main/audio/')
 # HOST_AUDIO_DIR = os.path.join(settings.STATIC_URL,'audio')
 
+
+@python_2_unicode_compatible
 class Word (models.Model):
     spell = models.CharField(max_length=30,unique=True,blank=False)
     definition = models.CharField(max_length=30)
@@ -44,15 +47,13 @@ class Word (models.Model):
         #     print(result)
         #gtts
         tts = gTTS(text=self.spell, lang='en', slow=False)
-        pronunciation = os.path.join(ABS_AUDIO_DIR, self.spell + '.mp3')
+        pronunciation = os.path.join(ABS_AUDIO_DIR, 'audio.mp3')
         t = Thread(target=tts.save,args=(pronunciation,))
         t.daemon = True
         t.start()
         t.join(timeout=3)
         if t.is_alive():
             return
-        self.pronunciation = self.spell+'.mp3'
-        self.save()
 
 #
 # class Level(models.Model):

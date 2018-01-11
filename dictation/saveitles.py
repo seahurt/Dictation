@@ -1,5 +1,5 @@
 #!python3
-
+# coding=utf-8
 import os
 import django
 os.environ['DJANGO_SETTINGS_MODULE'] = 'dictation.settings'
@@ -12,9 +12,9 @@ with open(itles) as f:
     for line in content:
         # print(line)
         word,sync,chinese = line.strip().split('\t')
-        explain = ';'.join([sync,chinese])
+        explain = '\n'.join([sync,chinese])
         try:
-            exist = Word.objects.get(english=word)
+            exist = Word.objects.get(spell=word)
         except BaseException:
             newword = Word(spell=word,definition=explain)
             newword.save()
