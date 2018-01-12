@@ -5,11 +5,16 @@ from .models import Word
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from random import randint
-from multiprocessing import Pool,Process
+#from multiprocessing import Pool,Process
 import json
 from django.core import serializers
+
+
 # data = serializers.serialize("xml", SomeModel.objects.all())
 # Create your views here.
+
+
+
 # @login_required(login_url='/user/login/')
 def index(request):
     if request.method=='GET':
@@ -19,12 +24,9 @@ def index(request):
             'wordlist':wordlist
         }
         print(context)
-        p = Pool(10)
         for word in wordlist:
             if word.pronunciation == '':
-                p.apply_async(word.Pronunce)
-        p.close()
-        p.join()
+                word.Pronunce()
         # time.sleep(2)
         return render(request,'main/index.html',context)
 
@@ -41,9 +43,7 @@ def randword(request):
     else:
         correctrate = '%.2f%' %(len(errorlist)/(len(errorlist)+len(knownlist)))
     if word.pronunciation == '':
-        p = Process(target=word.Pronunce)
-        p.start()
-        p.join()
+        word.Pronunce()
     context = {
         # 'word':serializers.serialize('json',[word],ensure_ascii=False),
         # 'errorlist':serializers.serialize('json',list(errorlist),ensure_ascii=False),

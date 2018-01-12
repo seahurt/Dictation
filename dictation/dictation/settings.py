@@ -25,7 +25,7 @@ SECRET_KEY = '$#ra4ca0a_6b$ec3(fvm3gh5q0*+onfcj0*#5epss@ry7d)w^2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dict.seahurt.xyz','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,14 +76,25 @@ WSGI_APPLICATION = 'dictation.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dictation',
-        'USER': 'postgres',
+        # If you are using Cloud SQL for MySQL rather than PostgreSQL, set
+        # 'ENGINE': 'django.db.backends.mysql' instead of the following.
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dict_database',
+        'USER': 'dbuser',
         'PASSWORD': 'SuperSun32',
-        'HOST': '103.74.193.18',
+        # For MySQL, set 'PORT': '3306' instead of the following. Any Cloud
+        # SQL Proxy instances running locally must also be set to tcp:3306.
         'PORT': '5432',
     }
 }
+# In the flexible environment, you connect to CloudSQL using a unix socket.
+# Locally, you can use the CloudSQL proxy to proxy a localhost connection
+# to the instance
+DATABASES['default']['HOST'] = '/cloudsql/dictation-db:asia-east1:dictation-pgsql'
+if os.getenv('GAE_INSTANCE'):
+    pass
+else:
+    DATABASES['default']['HOST'] = '127.0.0.1'
 
 
 # Password validation
@@ -122,6 +133,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = 'static/'
-AUDIO_DIRS = os.path.join(BASE_DIR,'static/')
+STATIC_URL = 'https://storage.googleapis.com/dictation-static/static/'
+
+#AUDIO_DIRS = os.path.join(BASE_DIR,'/static/')
