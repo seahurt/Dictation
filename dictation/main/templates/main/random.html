@@ -37,6 +37,14 @@
     <div id="msgzone" ref="msgzone" v-html="message">
         {% verbatim %} {{ message }} {% endverbatim %}
     </div>
+
+<div id="postinfo">
+    <form class="postform" action="{% url 'addtoerror' spell=word.spell nextpk=0 %}"><button class="postbtn" type="submit">Add to Error List</button></form>
+    <form class="postform" action="{% url 'addtoknown' spell=word.spell nextpk=0 %}"><button class="postbtn" type="submit" >Add to Known List</button></form>
+</div>
+<div id="bottom-navi">
+    <a id="backindex" href="{% url 'index' %}">Back</a>
+</div>
 </div>
 </div>
 <script >

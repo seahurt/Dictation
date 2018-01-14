@@ -21,30 +21,30 @@ def checkmp3(word):
 
 
 def index(request):
-    if request.method == 'GET':
-        wordlist = Word.objects.all().order_by('?')[:10]
-        # wordlist = all[:10]
-        context = {
-            'wordlist': wordlist
-        }
-        print(context)
-        p = Pool(10)
-        for word in wordlist:
-            if word.pronunciation == '':
-                p.apply_async(word.Pronunce)
-        p.close()
-        p.join()
+    # if request.method == 'GET':
+    #     wordlist = Word.objects.all().order_by('?')[:10]
+    #     # wordlist = all[:10]
+    #     context = {
+    #         'wordlist': wordlist
+    #     }
+    #     print(context)
+    #     p = Pool(10)
+    #     for word in wordlist:
+    #         if word.pronunciation == '':
+    #             p.apply_async(word.Pronunce)
+    #     p.close()
+    #     p.join()
         # time.sleep(2)
-        return render(request, 'main/index.html', context=context)
+        return render(request, 'main/index.html')
 
 
 def wordtest(request, pk):
     word = Word.objects.get(pk=pk)
-    next = str(int(pk)+1)
+    _next = str(int(pk)+1)
     checkmp3(word)
     context = {
         'word': word,
-        'next': next,
+        'next': _next,
     }
     return render(request, 'main/detail.html', context=context)
 
@@ -61,6 +61,22 @@ def stat():
             len(errorlist)/(len(errorlist)+len(knownlist))*100)+'%'
     return(errorlist, knownlist, errornum, knownnum, correctrate)
 
+
+def statinfo(request):
+    # errorlist = Word.objects.filter(error=True)
+    # knownlist = Word.objects.filter(known=True)
+    # errornum = len(errorlist)
+    # knownnum = len(knownlist)
+    errorlist, knownlist, errornum, knownnum, correctrate = stat()
+    context = {
+        'knownnum': knownnum,
+        'errornum': errornum,
+        'knownlist': knownlist,
+        'errorlist': errorlist,
+        'correctrate': correctrate
+    }
+    return render(request, 'main/statinfo.html', context=context)
+
 # @login_required(login_url='/user/login/')
 
 
@@ -69,23 +85,16 @@ def randword(request):
     key = randint(0, len(wordlist)-1)
     word = wordlist[key]
     checkmp3(word)
-    errorlist, knownlist, errornum, knownnum, correctrate = stat()
     context = {
-        # 'word':serializers.serialize('json',[word],ensure_ascii=False),
-        # 'errorlist':serializers.serialize('json',list(errorlist),ensure_ascii=False),
-        # 'knownlist':serializers.serialize('json',list(knownlist),ensure_ascii=False),
-        'word': word,
-        # 'errorlist': errorlist,
-        # 'knownlist': knownlist,
-        # 'errornum': errornum,
-        # 'knownnum': knownnum,
-        # 'correctrate': correctrate,
+        'word':word
     }
     return render(request, 'main/random.html', context=context)
 
 
 def randerror(request):
     wordlist = Word.objects.filter(error=True)
+    if len(wordlist)==0:
+        return redirect(statinfo)
     key = randint(0, len(wordlist)-1)
     word = wordlist[key]
     checkmp3(word)
@@ -95,31 +104,30 @@ def randerror(request):
     return render(request, 'main/randerror.html', context=context)
 
 
-def statinfo(request):
-    errorlist = Word.objects.filter(error=True)
-    knownlist = Word.objects.filter(known=True)
-    errornum = len(errorlist)
-    knownnum = len(knownlist)
-    return HttpResponse('statinfo')
 
-
-def addToErrorList(request):
+def addToErrorList(request,spell,nextpk=0):
     """TODO:add login control"""
-    english = request.POST['word']
-    word = Word.objects.get(spell=english)
+    # english = request.POST['word']
+    word = Word.objects.get(spell=spell)
     word.error = True
     word.known = False
     word.save()
-    return HttpResponse(json.dumps({'success': True}))
+    if int(nextpk) == 0:
+        return redirect(randword)
+    else:
+        return redirect(wordtest,pk=nextpk)
 
 
-def addToKnownList(request):
-    english = request.POST['word']
-    word = Word.objects.get(spell=english)
+def addToKnownList(request,spell,nextpk=0):
+    # english = request.POST['word']
+    word = Word.objects.get(spell=spell)
     word.known = True
     word.error = False
     word.save()
-    return HttpResponse(json({'success': True}))
+    if int(nextpk) == 0:
+        return redirect(randword)
+    else:
+        return redirect(wordtest,pk=nextpk)
 # @login_required(login_url='/user/login/')
 # def addToList(request):
 #     pass

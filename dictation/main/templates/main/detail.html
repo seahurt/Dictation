@@ -22,7 +22,7 @@
     </div>
     <div id="inputzone">
         <label>Answer:</label>
-        <input id="answertext" type="text" v-model="answer" size="50" >
+        <input id="answertext" type="text" v-model="answer" size="45" >
     </div>
     <div id="buttonline">
         <button class="button-style" v-on:click="check" type="button" >Check</button>
@@ -30,7 +30,8 @@
 
         <button class="button-style" v-on:click="hint" type="button" >Hint</button>
 
-        <form id="nextform" action="{% url 'wordtest' pk=next %}" ><input class="button-style" type="submit" value="Next"></form>
+        <form id="nextform" action="{% url 'wordtest' pk=next %}" >
+            <button class="button-style" type="submit" >Next</button></form>
         <!-- <button id='addtoerror' v-on:click="addtoerror" type="button">Add to Error List</button> -->
     </div>
     <div id="msgzone" ref="msgzone" v-html="message">
@@ -38,11 +39,11 @@
     </div>
 </div>
 <div id="postinfo">
-    <button v-on:click="posterror">Add to Error List</button>
-    <button v-on:click="postknown">Add to Known List</button>
+    <form class="postform" action="{% url 'addtoerror' spell=word.spell nextpk=next %}"><button class="postbtn" type="submit">Add to Error List</button></form>
+    <form class="postform" action="{% url 'addtoknown' spell=word.spell nextpk=next %}"><button class="postbtn" type="submit" >Add to Known List</button></form>
 </div>
-<div id="pagenavi">
-    <a href="{% url 'index' %}">Back to Index</a>
+<div id="bottom-navi">
+    <a id="backindex" href="{% url 'index' %}">Back</a>
 </div>
 </div>
 <script >
@@ -81,7 +82,7 @@ var app1 = new Vue({
             var audio = document.getElementById("controls");
             audio.play();
 
-        },
+        }
     }
 })
 </script>

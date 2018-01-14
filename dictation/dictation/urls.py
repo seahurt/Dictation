@@ -27,6 +27,6 @@ urlpatterns = [
     # url(r'^user/index/$',views.index,name='index'),
     # url(r'^user/login/$', views.login_view,name='login'),
     # url(r'^user/logout/$', views.logout_view, name='logout')
-    url(r'^addtoerrorlist/$', views.addToErrorList, name='addtoerror'),
-    url(r'^addtoknownlist/$', views.addToKnownList, name='addtoknown')
+    url(r'^addtoerrorlist/(?P<spell>[\w\-]+)/(?P<nextpk>[0-9]+)/$', views.addToErrorList, name='addtoerror'),
+    url(r'^addtoknownlist/(?P<spell>[\w\-]+)/(?P<nextpk>[0-9]+)/$', views.addToKnownList, name='addtoknown')
 ]

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -80,14 +81,18 @@ WSGI_APPLICATION = 'dictation.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+with open('app.json','r') as af:
+    appenv = json.load(af)
+    for key in appenv.keys():
+        os.environ[key] = appenv[key]
 
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb',
+        'NAME': os.environ['dbname'],
         'HOST': os.environ['aws_rds'],  # for protection of privacy
         'PORT': 5432,
-        'USERNAME': os.environ['dbname'],  # for privacy
+        'USERNAME': os.environ['dbuser'],  # for privacy
         'PASSWORD': os.environ['dbpass'],  # for privacy
     }
 }

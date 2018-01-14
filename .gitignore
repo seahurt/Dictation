@@ -116,3 +116,6 @@ dictation/static/
 # vscode workspace
 *.code-workspace
 settings.json
+
+# private data
+app.json
