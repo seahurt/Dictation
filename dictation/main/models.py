@@ -13,7 +13,7 @@ ABS_AUDIO_DIR = os.path.join(STATIC_DIR,'main/audio/')
 
 class Word (models.Model):
     spell = models.CharField(max_length=30,unique=True,blank=False)
-    definition = models.CharField(max_length=30)
+    definition = models.CharField(max_length=1000)
     example = models.CharField(max_length=500,blank=True)
     pronunciation = models.CharField(max_length=1000,blank=True)
     phonetic_symbol = models.CharField(max_length=100,blank=True)
