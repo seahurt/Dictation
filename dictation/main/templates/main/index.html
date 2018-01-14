@@ -1,16 +1,9 @@
-{% load static %}
-<ol>
-    {% for word in wordlist %}
-<li>
-    <audio controls="controls" height="100" width="100">
-    <source src="{% static 'main/audio/' %}{{word.english}}.mp3" type="audio/mpeg"/>
-    <embed height="100" width="100" src="/audio/{{word.english}}.mp3"/>
-</audio>
-<h2>{{word.Chinese}}</h2>
-    <form>
-        <label>English:</label>
-    <input type="text" name="English" > <input type="button" value="Check">
-    </form>
-</li>
-{% endfor %}
-</ol>
+{% extends "main/base.html" %}
+{% block content %}
+<div id="indexnavi">
+<a class="indexbutton" id="orderlist" href="{% url 'wordtest' '1' %} ">顺序练习</a>
+<a class="indexbutton" id="randlist" href="{% url 'randword' %}">乱序练习</a>
+<a class="indexbutton" id="errorlist" href="{% url 'randerror' %}">错词练习</a>
+<a class="indexbutton" id="stat" href="{% url 'statinfo' %}">统计信息</a>
+</div>
+{% endblock %}

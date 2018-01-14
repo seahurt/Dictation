@@ -19,11 +19,14 @@ from main import views
 from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^word$', views.index,name='index'),
-    url(r'^$',views.randword,name='randword'),
+    url(r'^$', views.index, name='index'),
+    url(r'^rand/$', views.randword, name='randword'),
+    url(r'^word/(?P<pk>\d+)/$', views.wordtest, name='wordtest'),
+    url(r'^errlist/$', views.randerror, name='randerror'),
+    url(r'^statinfo/$', views.statinfo, name="statinfo"),
     # url(r'^user/index/$',views.index,name='index'),
     # url(r'^user/login/$', views.login_view,name='login'),
     # url(r'^user/logout/$', views.logout_view, name='logout')
-    url(r'^addtoerrorlist/$',views.addToErrorList,name='addtoerror'),
-    url(r'^addtoknownlist/$',views.addToKnownList,name='addtoknown')
+    url(r'^addtoerrorlist/$', views.addToErrorList, name='addtoerror'),
+    url(r'^addtoknownlist/$', views.addToKnownList, name='addtoknown')
 ]

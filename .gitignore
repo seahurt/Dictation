@@ -112,3 +112,7 @@ db.sqlite3
 *.mp3
 # static
 dictation/static/
+
+# vscode workspace
+*.code-workspace
+settings.json
