@@ -19,8 +19,8 @@ from main import views
 from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^word$', views.index,name='index'),
-    url(r'^$',views.randword,name='randword'),
+    url(r'^word$', views.index,name='randword'),
+    url(r'^$',views.randword,name='index'),
     # url(r'^user/index/$',views.index,name='index'),
     # url(r'^user/login/$', views.login_view,name='login'),
     # url(r'^user/logout/$', views.logout_view, name='logout')
