@@ -39,7 +39,7 @@ def randword(request):
     if (len(errorlist)+len(knownlist))==0:
         correctrate = '0%'
     else:
-        correctrate = '%.2f%' %(len(errorlist)/(len(errorlist)+len(knownlist)))
+        correctrate = f'{round(len(errorlist)/(len(errorlist)+len(knownlist)), 2)}%' 
     if word.pronunciation == '':
         p = Process(target=word.Pronunce)
         p.start()
